@@ -195,6 +195,8 @@ h1 {
   display: block;
   width: 100%;
   height: auto;
+  padding-bottom: 14px;
+  background: #0a0e16;
   border-radius: 12px 12px 32px 32px;
 }
 
