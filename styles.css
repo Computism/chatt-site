@@ -165,12 +165,6 @@ h1 {
 
 .btn-block { width: 100%; }
 
-.cta-note {
-  margin-top: 16px;
-  font-size: 0.9rem;
-  color: var(--text-2);
-}
-
 /* ============ phone mockup ============ */
 .hero-visual { display: flex; justify-content: center; }
 
