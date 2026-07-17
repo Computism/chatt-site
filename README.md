@@ -20,7 +20,5 @@ python3 -m http.server 8471
 
 ## TODO
 
-- [ ] Android testers Google Group URL (search `TODO` in `index.html`), then enable the
-      step-1 link and swap the disabled button for a real "Join the Android beta" CTA
 - [ ] `og:image` (raster) for link previews
 - [ ] Custom domain: add `CNAME` file + configure in repo settings
