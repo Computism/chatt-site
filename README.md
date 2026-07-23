@@ -28,7 +28,7 @@ python3 -m http.server 8471
 
 - [ ] `og:image` (raster) for link previews
 - [ ] Custom domain: `CNAME` file added; still need to set it in repo settings
-      (Pages → Custom domain, enable HTTPS) and point chatty.pk DNS at GitHub Pages
+  (Pages → Custom domain, enable HTTPS) and point chatty.pk DNS at GitHub Pages
 - [ ] After the DNS switch, verify `https://chatty.pk/.well-known/apple-app-site-association`
-      and `assetlinks.json` still resolve, then drop the `.well-known` locations from
-      the nginx configs in big-chat
+  and `assetlinks.json` still resolve, then drop the `.well-known` locations from
+  the nginx configs in big-chat
