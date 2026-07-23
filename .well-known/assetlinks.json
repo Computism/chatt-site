@@ -1,0 +1,13 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.computism.chatt",
+            "sha256_cert_fingerprints": [
+                "C5:F5:1D:E2:56:14:54:74:01:9E:5B:5E:11:CF:85:A6:A9:EC:B5:B3:F4:E3:7A:A3:FC:E0:04:05:99:7B:CB:90",
+                "23:8F:E3:D0:25:56:BC:0D:2F:C1:27:E5:3B:F4:1D:3A:21:88:90:C7:F8:4A:97:93:41:90:CE:7B:7F:4E:6F:CE"
+            ]
+        }
+    }
+]
