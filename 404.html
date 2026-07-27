@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ChatT — you're invited</title>
+  <meta name="description" content="Join the conversation on ChatT — a fast, private messenger with voice & video calls, groups and channels." />
+  <meta name="theme-color" content="#0C121C" />
+  <meta property="og:title" content="You're invited to a group on ChatT" />
+  <meta property="og:description" content="Get ChatT, then open the invite link again — it will take you straight into the group." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="/assets/appicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* Page-specific: centred single-column layout reusing the site's tokens. */
+    .landing {
+      max-width: 34rem;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem 6rem;
+      text-align: center;
+    }
+    .landing h1 { margin: 0.75rem 0 0; }
+    .landing .lede { margin: 1.25rem auto 0; }
+    .landing .cta-row { justify-content: center; margin-top: 2rem; }
+    .landing-icon { width: 96px; height: 96px; margin: 0 auto; display: block; }
+    .link-box {
+      margin: 2.25rem auto 0;
+      padding: 0.85rem 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.65);
+      word-break: break-all;
+      max-width: 100%;
+    }
+    .copy-hint { margin-top: 0.6rem; font-size: 0.8rem; color: rgba(255, 255, 255, 0.45); }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="ChatT home">
+    <img class="brand-mark" src="/assets/appicon.svg" alt="" width="34" height="34" />
+    <span class="brand-name">ChatT</span>
+  </a>
+  <a class="header-cta" href="/#get">Get the app</a>
+</header>
+
+<main>
+  <!-- Shown when the path is a share/invite link; toggled by the script below. -->
+  <section class="landing" id="invite" hidden>
+    <img class="landing-icon" src="/assets/appicon.svg" alt="" />
+    <p class="eyebrow">Group invitation</p>
+    <h1>You're invited to a<br /><span class="grad">group on ChatT</span></h1>
+    <p class="lede">
+      If ChatT is installed, opening this link from a message or email takes you
+      straight into the group. Don't have the app yet? Grab the beta below, then
+      open your invite link again.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://testflight.apple.com/join/wXer1BjH">Join the iOS beta</a>
+      <a class="btn btn-ghost" href="https://play.google.com/apps/testing/com.computism.chatt">Android beta</a>
+    </div>
+    <div class="link-box" id="invite-url" role="button" tabindex="0" title="Copy invite link"></div>
+    <p class="copy-hint" id="copy-hint">Tap the link to copy it for later.</p>
+  </section>
+
+  <!-- Default view: a plain not-found page (also the no-JS fallback). -->
+  <section class="landing" id="not-found">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p class="lede">That page doesn't exist — but the conversation does.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/">Back to chatty.pk</a>
+    </div>
+  </section>
+</main>
+
+<script>
+  // GitHub Pages serves this file for every path with no matching file, so it
+  // doubles as the share-link landing page. Share links (created in the app)
+  // look like /share/:groupId/:canisterId/:inviteCode? — when the app is
+  // installed the OS opens it directly via universal/app links and this page
+  // is never seen; browsers land here instead.
+  (function () {
+    // Same shape the app matches in App.svelte's processDeepLink, so a link the
+    // app would accept never falls through to the generic not-found view.
+    var match = /^\/share\/[^/]+\/[^/]+(?:\/[^/]+)?\/?$/.exec(location.pathname);
+    if (!match) {
+      document.title = "ChatT — page not found";
+      return;
+    }
+
+    document.getElementById("not-found").hidden = true;
+    document.getElementById("invite").hidden = false;
+
+    var url = "https://chatty.pk" + location.pathname;
+    var box = document.getElementById("invite-url");
+    box.textContent = url;
+    var copy = function () {
+      navigator.clipboard.writeText(url).then(function () {
+        document.getElementById("copy-hint").textContent = "Copied!";
+      });
+    };
+    box.addEventListener("click", copy);
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") copy();
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -7,6 +7,12 @@ Served by GitHub Pages from the `main` branch root. `.nojekyll` disables Jekyll 
 ## Structure
 
 - `index.html` — the whole site
+- `404.html` — served by GitHub Pages for every path with no matching file; doubles as
+  the share-link landing page. App share links (`/share/:groupId/:canisterId/:inviteCode?`)
+  open the app directly via universal/app links when it's installed — browsers land here
+  instead and get an invite page with beta install links. All other unknown paths get a
+  plain not-found view. (Note: GitHub Pages serves it with HTTP status 404, so messenger
+  link-preview crawlers mostly won't render the og tags.)
 - `styles.css` — all styling (mobile-first, dark)
 - `assets/appicon.svg` — app icon (copied from the app repo)
 - `assets/fonts/Inter-Variable.woff2` — Inter variable font (copied from the app repo)
