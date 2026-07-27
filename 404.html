@@ -24,15 +24,23 @@
     .landing .cta-row { justify-content: center; margin-top: 2rem; }
     .landing-icon { width: 96px; height: 96px; margin: 0 auto; display: block; }
     .link-box {
+      display: block;
+      width: 100%;
       margin: 2.25rem auto 0;
       padding: 0.85rem 1.1rem;
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 12px;
+      background: none;
+      appearance: none;
+      -webkit-appearance: none;
+      font: inherit;
       font-size: 0.85rem;
       color: rgba(255, 255, 255, 0.65);
+      text-align: center;
       word-break: break-all;
-      max-width: 100%;
+      cursor: pointer;
     }
+    .link-box:hover, .link-box:focus-visible { border-color: rgba(255, 255, 255, 0.3); }
     .copy-hint { margin-top: 0.6rem; font-size: 0.8rem; color: rgba(255, 255, 255, 0.45); }
     [hidden] { display: none !important; }
   </style>
@@ -62,7 +70,7 @@
       <a class="btn btn-primary" href="https://testflight.apple.com/join/wXer1BjH">Join the iOS beta</a>
       <a class="btn btn-ghost" href="https://play.google.com/apps/testing/com.computism.chatt">Android beta</a>
     </div>
-    <div class="link-box" id="invite-url" role="button" tabindex="0" title="Copy invite link"></div>
+    <button class="link-box" id="invite-url" type="button" title="Copy invite link"></button>
     <p class="copy-hint" id="copy-hint">Tap the link to copy it for later.</p>
   </section>
 
@@ -95,17 +103,32 @@
     document.getElementById("not-found").hidden = true;
     document.getElementById("invite").hidden = false;
 
-    var url = "https://chatty.pk" + location.pathname;
+    // Show the link exactly as it was received, rather than rebuilding it.
+    var url = location.href;
     var box = document.getElementById("invite-url");
+    var hint = document.getElementById("copy-hint");
     box.textContent = url;
-    var copy = function () {
-      navigator.clipboard.writeText(url).then(function () {
-        document.getElementById("copy-hint").textContent = "Copied!";
-      });
-    };
-    box.addEventListener("click", copy);
-    box.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") copy();
+
+    box.addEventListener("click", function () {
+      // Invite links are often opened in in-app browsers, where the clipboard
+      // API can be missing or reject the write — select the text so it can
+      // still be copied by hand.
+      var written = navigator.clipboard
+        ? navigator.clipboard.writeText(url)
+        : Promise.reject();
+      written.then(
+        function () {
+          hint.textContent = "Copied!";
+        },
+        function () {
+          var range = document.createRange();
+          range.selectNodeContents(box);
+          var selection = getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          hint.textContent = "Copy the selected link.";
+        }
+      );
     });
   })();
 </script>
